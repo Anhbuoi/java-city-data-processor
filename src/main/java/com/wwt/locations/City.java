@@ -2,6 +2,7 @@ package com.wwt.locations;
 
 import java.time.ZoneId;
 import java.util.Objects;
+import java.util.Set;
 
 public class City {
     private String id;
@@ -10,6 +11,7 @@ public class City {
     private int population;
     private ZoneId timeZoneId;
     private State state;
+    private Set<String> zipCodes;
 
     public String getId() {
         return id;
@@ -59,6 +61,14 @@ public class City {
         this.state = state;
     }
 
+    public Set<String> getZipCodes() {
+        return zipCodes;
+    }
+
+    public void setZipCodes(Set<String> zipCodes) {
+        this.zipCodes = zipCodes;
+    }
+
     @Override
     public String toString() {
         return "City{" +
@@ -68,6 +78,7 @@ public class City {
                 ", population=" + population +
                 ", timeZoneId=" + timeZoneId +
                 ", state=" + state +
+                ", zips=" + zipCodes +
                 '}';
     }
 
@@ -81,11 +92,12 @@ public class City {
                 Objects.equals(name, city.name) &&
                 Objects.equals(location, city.location) &&
                 Objects.equals(timeZoneId, city.timeZoneId) &&
-                Objects.equals(state, city.state);
+                Objects.equals(state, city.state) &&
+                Objects.equals(zipCodes, city.zipCodes);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, location, population, timeZoneId, state);
+        return Objects.hash(id, name, location, population, timeZoneId, state, zipCodes);
     }
 }

@@ -11,8 +11,7 @@ import org.junit.jupiter.api.Test;
 import java.io.IOException;
 import java.io.InputStream;
 import java.time.ZoneId;
-import java.util.NoSuchElementException;
-import java.util.Set;
+import java.util.*;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -44,7 +43,8 @@ class CsvCityDataSourceTest {
                 .hasFieldOrPropertyWithValue("location", Coordinate.of(34.8574, -111.7951))
                 .hasFieldOrPropertyWithValue("timeZoneId", ZoneId.of("America/Phoenix"))
                 .hasFieldOrPropertyWithValue("state", new State("Arizona", "AZ"))
-                .hasFieldOrPropertyWithValue("population", 6969);
+                .hasFieldOrPropertyWithValue("population", 6969)
+                .hasFieldOrPropertyWithValue("zipCodes", Set.of("86336", "86339"));
     }
 
     @Test

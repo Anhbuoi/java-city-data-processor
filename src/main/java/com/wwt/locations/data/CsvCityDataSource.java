@@ -59,6 +59,7 @@ public class CsvCityDataSource implements CityDataSource {
         city.setTimeZoneId(ZoneId.of(record.get("timezone")));
         city.setPopulation((int) Double.parseDouble(record.get("population")));
         city.setState(new State(record.get("state_name"), record.get("state_id")));
+        city.setZipCodes(Set.of(record.get("zips").split(" ")));
         return city;
     };
 }
