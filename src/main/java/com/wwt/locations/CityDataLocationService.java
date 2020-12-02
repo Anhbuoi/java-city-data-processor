@@ -9,22 +9,22 @@ import java.util.stream.Collectors;
 
 // FIXME: #2 Please implement this! See CityDataLocationServiceTest for some examples of how this should work.
 public class CityDataLocationService implements LocationService {
-    private final CityDataSource cityDataSource;
+    private final Set<City> allCities;
 
     public CityDataLocationService(CityDataSource cityDataSource) throws IOException {
-        this.cityDataSource = cityDataSource;
+        this.allCities = cityDataSource.getAllCities();
     }
 
     @Override
     public Set<State> getStates() {
-        return cityDataSource.getAllCities().stream()
+        return allCities.stream()
                 .map(City::getState)
                 .collect(Collectors.toSet());
     }
 
     @Override
     public Optional<State> findStateByName(String stateName) {
-        return cityDataSource.getAllCities().stream()
+        return allCities.stream()
                 .map(City::getState)
                 .filter(state -> stateName.equals(state.getName()))
                 .findFirst();
@@ -32,14 +32,14 @@ public class CityDataLocationService implements LocationService {
 
     @Override
     public Set<City> findCitiesByZipCode(String zipCode) {
-        return cityDataSource.getAllCities().stream()
+        return allCities.stream()
                 .filter(city -> city.getZipCodes().contains(zipCode))
                 .collect(Collectors.toSet());
     }
 
     @Override
     public Set<City> findCitiesIn(State state) {
-        return cityDataSource.getAllCities().stream()
+        return allCities.stream()
                 .filter(city -> state.equals(city.getState()))
                 .collect(Collectors.toSet());
     }
@@ -56,7 +56,7 @@ public class CityDataLocationService implements LocationService {
         if (radiusInKilometers < 0) {
             throw new IllegalArgumentException("Invalid negative radius.");
         }
-        return cityDataSource.getAllCities().stream()
+        return allCities.stream()
                 .filter(city -> radiusInKilometers >= CoordinateDistanceCalculator.kilometersBetween(location, city.getLocation()))
                 .collect(Collectors.toSet());
     }
